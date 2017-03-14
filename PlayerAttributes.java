@@ -99,6 +99,11 @@ public class PlayerAttributes {
 		return res;
 	}
 	
+	public int[] getStats(){
+		return new int[] {strength.getStat(),dexterity.getStat(),cons.getStat()
+		                  ,intel.getStat(),wisdom.getStat(),charisma.getStat()};
+	}
+	
 	public void UseInspiration(){
 		inspiration ^= true;
 	}

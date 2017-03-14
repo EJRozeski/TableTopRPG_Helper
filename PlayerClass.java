@@ -109,7 +109,7 @@ public class PlayerClass {
 	 * 	Will be used for display
 	 */
 	public int[] getVitals(){
-		return new int[] {level, exp, maxHitPoints,currentHitPoints, armor, speed};
+		return new int[] {level, exp, currentHitPoints, armor, speed};
 	}
 	
 	/*

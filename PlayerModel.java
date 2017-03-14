@@ -26,24 +26,29 @@ public class PlayerModel extends Observable{
 		switch(id){
 			case 's' :
 				playerStats.changeStrength(stat);
+				announceChange(new Object[] {"a", "Strength"});
 				break;
 			case 'd' :
 				playerStats.changeDex(stat);
+				announceChange(new Object[] {"a", "Dexterity"});
 				break;
 			case 'c' :
 				playerStats.changeCons(stat);
+				announceChange(new Object[] {"a", "Constitution"});
 				break;
 			case 'i' :
 				playerStats.changeIntel(stat);
+				announceChange(new Object[] {"a", "Intelligence"});
 				break;
 			case 'w' :
 				playerStats.changeWisdom(stat);
+				announceChange(new Object[] {"a", "Wisdom"});
 				break;
 			case 'C' :
 				playerStats.changeCharisma(stat);
+				announceChange(new Object[] {"a", "Charisma"});
 				break;
 		}
-		announceChange();
 	}
 	
 	/*
@@ -60,7 +65,7 @@ public class PlayerModel extends Observable{
 	 */
 	public void useInspiration(){
 		playerStats.UseInspiration();
-		announceChange();
+		announceChange(new Object[] {"i",1});
 	}
 	
 	/*
@@ -77,15 +82,25 @@ public class PlayerModel extends Observable{
 	 */
 	public void addSkill(String skill){
 		playerStats.addSkill(skill);
-		announceChange();
+		announceChange(new Object[] {"s",skill});
 	}
 	
 	/*
 	 * displaySkills returns an arraylist of skills the character has learned
 	 * 	so it can be displayed
 	 */
-	public ArrayList<String> displaySkills(){
-		return playerStats.checkSkills();
+	public void displaySkills(){
+		ArrayList<String> skills = playerStats.checkSkills();
+		System.out.println("Skills: ");
+		int i = 0;
+		for(String s : skills){
+			System.out.println(s +", ");
+			i++;
+			if(i > 4){
+				System.out.println("\n");
+				i = 0;
+			}
+		}
 	}
 
 	/*
@@ -96,21 +111,25 @@ public class PlayerModel extends Observable{
 		switch(id){
 			case 'm' :
 				playerClass.addHitPoints(change);
+				announceChange(new Object[] {"h", change});
 				break;
 			case 's' :
 				playerClass.changeSpeed(change);
+				announceChange(new Object[] {});
 				break;
 			case 'e' :
 				playerClass.addExp(change);
+				announceChange(new Object[] {"e", change});
 				break;
 			case 'd' :
 				playerClass.changeHitPoints(change);
+				announceChange(new Object[] {"h", change});
 				break;
 			case 'a' :
 				playerClass.changeArmor(change);
+				announceChange(new Object[] {"r", change});
 				break;
 		}
-		announceChange();
 	}
 	
 	/*
@@ -137,12 +156,33 @@ public class PlayerModel extends Observable{
 		return playerClass.getDeathSaves();
 	}
 	
+	public void display(){
+		String result = "";
+		String[] id = getID();
+		int[] vit = getVitals();
+		int[] stats = playerStats.getStats();
+		result += "Name: " + id[0] + "\n";
+		result += "Race: " + id[1] + "   Class: " + id[2] + "\n";
+		result += "Alignment: " + id[3] + "\n";
+		result += "Level: " + vit[0] + "    Experience: " + vit[1] + 
+				"HitPoints: " + vit[2] + "\n";
+		result += "Armor: " + vit[3] + "    Speed: " + vit[4] + "\n";
+		result += "Strength: " + stats[0] + "     Dexterity: " + stats[1] + "\n";
+		result += "Constitution: " + stats[2] + "     Intelligence: " + stats[3]
+				+ "\n";
+		result += "Wisdom: " + stats[4] + "    Charisma: " + stats[5] + "\n";
+		result += "Inspiration: " + playerStats.checkInspiration() + "\n";
+		System.out.println(result);
+		
+	}
+	
+	
 	/*
 	 * announceChange allows Observers to know Model characteristics have been
 	 * 	updated so the display can be updated 
 	 */
-	private void announceChange(){
+	private void announceChange(Object[] args){
 		setChanged();
-		notifyObservers();
+		notifyObservers(args);
 	}
 }
