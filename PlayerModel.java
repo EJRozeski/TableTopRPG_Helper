@@ -11,9 +11,8 @@ public class PlayerModel extends Observable{
 	private PlayerClass playerClass;
 	public String name;
 	
-	public PlayerModel(int str, int dex, int cos, int intel, int wis, int cha,
-						String name, String race, String pClass, String alignment){
-		this.playerStats = new PlayerAttributes(str,dex,cos,intel,wis,cha);
+	public PlayerModel(String name, String race, String pClass, String alignment){
+		this.playerStats = new PlayerAttributes();
 		this.playerClass = new PlayerClass(name,race,pClass,alignment);
 		this.name = name;
 	}

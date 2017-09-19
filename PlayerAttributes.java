@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Random;
 
 public class PlayerAttributes {
 	private Stat strength;
@@ -10,6 +11,17 @@ public class PlayerAttributes {
 	private boolean inspiration;
 	private ArrayList<String> skills;
 	
+	public PlayerAttributes(){
+		this.strength = new Stat(randomStat());
+		this.dexterity = new Stat(randomStat());
+		this.cons = new Stat(randomStat());
+		this.intel = new Stat(randomStat());
+		this.wisdom = new Stat(randomStat());
+		this.charisma = new Stat(randomStat());
+		this.inspiration = false;
+		this.skills = new ArrayList<String>();
+	}
+
 	public PlayerAttributes(int strength, int dexterity, int cons, int intel,
 			int wisdom, int charisma){
 		this.strength = new Stat(strength);
@@ -20,6 +32,12 @@ public class PlayerAttributes {
 		this.charisma = new Stat(charisma);
 		this.inspiration = false;
 		this.skills = new ArrayList<String>();
+	}
+
+	public static int randomStat(){
+		Random rand = new Random();
+	    int randomNum = rand.nextInt(18 - 1) + 1;
+		    return randomNum;
 	}
 
 	public void changeStrength(int num){
